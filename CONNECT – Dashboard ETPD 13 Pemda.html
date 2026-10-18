@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>CONNECT – Dashboard ETPD 13 Pemda</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Instrument+Sans:wght@400;500;600&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#f4efe6;--card:#fffdf8;--ink:#1d2b2a;--mut:#6b7570;--line:#ddd5c4;--acc:#0f5c5a;--acc2:#c4572b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#121a19;--card:#1b2625;--ink:#ece6d8;--mut:#9aa6a1;--line:#2f3d3b;--acc:#5fc4bd;--acc2:#f08a5d;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#121a19;--card:#1b2625;--ink:#ece6d8;--mut:#9aa6a1;--line:#2f3d3b;--acc:#5fc4bd;--acc2:#f08a5d;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 'Instrument Sans',system-ui,sans-serif}
+header{padding:22px 20px 8px;max-width:1200px;margin:auto}
+h1{font:600 28px 'Fraunces',Georgia,serif;margin:0}h1 small{display:block;font:500 12px 'Instrument Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--acc2);margin-bottom:4px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:12px 20px;max-width:1200px;margin:auto}
+nav button{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:999px;font:500 13px inherit;cursor:pointer}
+nav button.on{background:var(--acc);color:var(--bg);border-color:var(--acc)}
+main{max-width:1200px;margin:auto;padding:0 20px 30px}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin:6px 0 14px}
+.bar label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);display:flex;flex-direction:column;gap:4px}
+select{font:500 14px inherit;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);min-width:200px}
+.grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px}
+@media(max-width:820px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}
+.card h2{font:600 18px 'Fraunces',serif;margin:0 0 2px}.sub{color:var(--mut);font-size:13px;margin:0 0 10px}
+.cv{position:relative;height:460px}.cv.s{height:380px}
+.sc{overflow-x:auto;max-height:480px;overflow-y:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}th{position:sticky;top:0;background:var(--card);font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut)}
+.y{color:var(--acc);font-weight:600}.n{color:var(--acc2);font-weight:600}
+.kpi{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}.kpi div{flex:1;min-width:130px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.kpi b{display:block;font:600 26px 'Fraunces',serif;color:var(--acc)}.kpi span{font-size:12px;color:var(--mut)}
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px;color:var(--mut);font-size:12px;gap:10px}
+.foot button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:8px;cursor:pointer;font:500 13px inherit}
+.note{font-size:12px;color:var(--mut);margin-top:12px;border-left:3px solid var(--acc2);padding-left:10px}
+</style></head><body>
+<header><h1><small>CONNECT · Matrix 12 Komitmen × 13 Pemda</small>Dashboard Kesiapan ETPD</h1></header>
+<nav id="nav"></nav><main id="m"></main>
+<script>
+const D={"P":[{"n":"Kota Kediri","t":"Kota","b":81.8},{"n":"Kab. Kediri","t":"Kabupaten","b":82.8},{"n":"Kota Blitar","t":"Kota","b":95},{"n":"Kab. Blitar","t":"Kabupaten","b":81.1},{"n":"Kota Madiun","t":"Kota","b":95.1},{"n":"Kab. Madiun","t":"Kabupaten","b":90.8},{"n":"Kab. Ponorogo","t":"Kabupaten","b":86.3},{"n":"Kab. Pacitan","t":"Kabupaten","b":94},{"n":"Kab. Magetan","t":"Kabupaten","b":80.5},{"n":"Kab. Ngawi","t":"Kabupaten","b":97.9},{"n":"Kab. Nganjuk","t":"Kabupaten","b":97.2},{"n":"Kab. Tulungagung","t":"Kabupaten","b":81},{"n":"Kab. Trenggalek","t":"Kabupaten","b":75.3}],"C":[{"n":"Transaksi Non-Tunai","it":[{"i":"1.1","l":"Pembayaran non-tunai tersedia?","y":"YN","v":["Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","No"]},{"i":"1.2","l":"% transaksi pajak/retribusi non-tunai","y":"PCT","v":[80.6,81.5,92.5,80,92.6,88.7,84.7,91.6,79.5,95.1,94.5,79.9,74.8]},{"i":"1.3","l":"Jumlah jenis pajak/retribusi non-tunai","y":"NUM","v":[5,5,7,5,7,6,6,7,5,8,8,5,4]}],"s":[81.0,81.3,93.3,80.8,93.4,87.9,86.6,93.0,80.7,98.4,98.2,80.8,41.6]},{"n":"Digitalisasi End-to-End","it":[{"i":"2.1","l":"Proses digital end-to-end tersedia?","y":"YN","v":["Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","No"]},{"i":"2.2","l":"% proses end-to-end digital","y":"PCT","v":[74.6,75.8,90.8,73.7,91,85.7,80.1,89.6,73,94.4,93.5,73.6,66.5]},{"i":"2.3","l":"Waktu pembayaran–rekonsiliasi (jam)","y":"NUM","v":[25.4,24.5,13.5,26,13.4,17.3,21.3,14.4,26.6,10.9,11.5,26.1,31.2]}],"s":[72.5,73.4,90.5,71.9,90.8,82.9,77.1,88.4,71.3,98.1,96.1,71.8,33.8]},{"n":"Integrasi Sistem","it":[{"i":"3.1","l":"Terintegrasi dengan Bank RKUD?","y":"YN","v":["Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","No"]},{"i":"3.2","l":"Jumlah sistem/kanal terintegrasi","y":"NUM","v":[4,4,6,4,6,5,5,6,4,7,7,4,3]},{"i":"3.3","l":"% rekonsiliasi otomatis","y":"PCT","v":[70.7,72.1,88.3,69.8,88.5,82.7,76.7,87,69,92.2,91.3,69.7,62.1]}],"s":[75.9,76.4,91.3,75.6,91.4,84.7,82.7,90.9,75.4,97.4,97.1,75.6,35.0]},{"n":"Optimalisasi PAD","it":[{"i":"4.1","l":"Monitoring PAD digital tersedia?","y":"YN","v":["Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","No"]},{"i":"4.2","l":"Realisasi PAD terhadap target (%)","y":"PCT","v":[93.5,94,99.7,93.2,99.7,97.7,95.6,99.2,92.9,101,100.7,93.1,90.5]}],"s":[96.8,97.0,99.8,96.6,99.8,98.8,97.8,99.6,96.5,100.0,100.0,96.5,45.2]},{"n":"Roadmap ETPD","it":[{"i":"5.1","l":"Roadmap ETPD tersedia?","y":"YN","v":["Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","No"]},{"i":"5.2","l":"% milestone roadmap terealisasi","y":"PCT","v":[70.7,72.1,88.3,69.8,88.5,82.7,76.7,87,69,92.2,91.3,69.7,62.1]}],"s":[85.3,86.0,94.2,84.9,94.2,91.3,88.3,93.5,84.5,96.1,95.7,84.8,31.1]},{"n":"Infrastruktur & Kanal","it":[{"i":"6.1","l":"Kanal pembayaran digital tersedia?","y":"YN","v":["Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","No"]},{"i":"6.2","l":"Jumlah kanal digital aktif","y":"NUM","v":[3,3,4,3,5,4,4,4,3,5,5,3,3]}],"s":[80.0,80.0,90.0,80.0,100.0,90.0,90.0,90.0,80.0,100.0,100.0,80.0,30.0]},{"n":"Literasi & Edukasi","it":[{"i":"7.1","l":"Program edukasi tersedia?","y":"YN","v":["Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","No"]},{"i":"7.2","l":"Jumlah kegiatan edukasi/tahun","y":"NUM","v":[4,4,5,3,5,5,4,5,3,6,6,3,3]}],"s":[83.3,83.3,91.7,75.0,91.7,91.7,83.3,91.7,75.0,100.0,100.0,75.0,25.0]},{"n":"SDM & Kapasitas","it":[{"i":"8.1","l":"PIC ETPD ditetapkan?","y":"YN","v":["Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","No"]},{"i":"8.2","l":"Jumlah kegiatan capacity building/tahun","y":"NUM","v":[2,2,4,2,4,3,3,3,2,4,4,2,2]}],"s":[75.0,75.0,100.0,75.0,100.0,87.5,87.5,87.5,75.0,100.0,100.0,75.0,25.0]},{"n":"Keamanan","it":[{"i":"9.1","l":"SOP keamanan transaksi tersedia?","y":"YN","v":["Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","No"]},{"i":"9.2","l":"% pemenuhan checklist keamanan","y":"PCT","v":[80.6,81.5,92.5,80,92.6,88.7,84.7,91.6,79.5,95.1,94.5,79.9,74.8]}],"s":[90.3,90.8,96.2,90.0,96.3,94.3,92.3,95.8,89.8,97.5,97.2,90.0,37.4]},{"n":"Monitoring & Evaluasi","it":[{"i":"10.1","l":"Monitoring ETPD berkala dilakukan?","y":"YN","v":["Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","No"]},{"i":"10.2","l":"% indikator ter-update","y":"PCT","v":[71.5,72.9,90,70.5,90.1,84.1,77.8,88.6,69.7,94.1,93.1,70.4,62.4]},{"i":"10.3","l":"% gap memiliki action plan","y":"PCT","v":[61.6,63.5,85.8,60.3,86,78.1,69.9,84,59.2,91.2,89.9,60.2,49.7]}],"s":[77.7,78.8,91.9,76.9,92.0,87.4,82.6,90.9,76.3,95.1,94.3,76.9,37.4]},{"n":"Regulasi & Kelembagaan","it":[{"i":"11.1","l":"Regulasi/SOP ETPD tersedia?","y":"YN","v":["Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","No"]},{"i":"11.2","l":"Jumlah forum koordinasi/tahun","y":"NUM","v":[2,2,4,2,4,3,3,3,2,4,4,2,2]}],"s":[75.0,75.0,100.0,75.0,100.0,87.5,87.5,87.5,75.0,100.0,100.0,75.0,25.0]},{"n":"Ekosistem & Kolaborasi","it":[{"i":"12.1","l":"Kerja sama Bank RKUD aktif?","y":"YN","v":["Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","No"]},{"i":"12.2","l":"Jumlah stakeholder/OPD terlibat","y":"NUM","v":[5,5,7,5,7,6,6,7,5,8,8,5,4]},{"i":"12.3","l":"% action item kolaborasi selesai","y":"PCT","v":[64.7,66.3,86.7,63.5,86.8,79.7,72.2,85,62.5,91.5,90.3,63.3,53.8]}],"s":[75.7,76.3,91.4,75.3,91.4,84.9,82.4,90.8,75.0,97.2,96.8,75.3,34.6]}]},P=D.P,C=D.C;
+const COL=['#c4572b','#e0a030','#a23b5a','#0f5c5a','#2f7fb5','#6a5acd','#3a9d5d','#8a6d3b','#d4688a','#4a5d8f','#2a9d8f','#b5651d','#7a8b2f'];
+const col=i=>COL[i%13];
+const idx=t=>P.map((p,i)=>i).filter(i=>!t||P[i].t==t);
+const avg=a=>a.reduce((x,y)=>x+y,0)/a.length;
+const f1=x=>(Math.round(x*10)/10).toLocaleString('id-ID');
+const dark=()=>matchMedia('(prefers-color-scheme:dark)').matches&&document.documentElement.dataset.theme!='light'||document.documentElement.dataset.theme=='dark';
+let ch=[],cur=0,st={s2:'all',s3:'all',s4:0,s5:0,s5t:'',s1:''};
+const opt=(arr,sel)=>arr.map(([v,l])=>`<option value="${v}"${v==sel?' selected':''}>${l}</option>`).join('');
+const sel=(id,lab,arr,v)=>`<label>${lab}<select id="${id}">${opt(arr,v)}</select></label>`;
+const compScore=(i)=>C.map(c=>c.s[i]);
+function mk(id,cfg){const t=getComputedStyle(document.documentElement),ink=t.getPropertyValue('--ink').trim(),ln=t.getPropertyValue('--line').trim();
+ cfg.options=Object.assign({responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:ink,boxWidth:12,font:{size:11}}}}},cfg.options||{});
+ if(cfg.type=='radar')cfg.options.scales={r:{min:0,max:100,ticks:{stepSize:25,backdropColor:'transparent',color:'#888',font:{size:9}},grid:{color:ln},angleLines:{color:ln},pointLabels:{color:ink,font:{size:10.5}}}};
+ else cfg.options.scales={x:{ticks:{color:ink,font:{size:10}},grid:{display:false}},y:{ticks:{color:ink},grid:{color:ln}}};
+ ch.push(new Chart(document.getElementById(id),cfg))}
+const rds=(label,data,i,fill=true)=>({label,data,borderColor:col(i),backgroundColor:col(i)+'26',pointBackgroundColor:col(i),borderWidth:2,pointRadius:3,fill});
+const short=n=>n.replace('Infrastruktur & Kanal','Infra & Kanal').replace('Digitalisasi End-to-End','Digital E2E').replace('Monitoring & Evaluasi','Monev').replace('Regulasi & Kelembagaan','Regulasi').replace('Ekosistem & Kolaborasi','Ekosistem').replace('Literasi & Edukasi','Literasi').replace('SDM & Kapasitas','SDM').replace('Transaksi Non-Tunai','Non-Tunai').replace('Integrasi Sistem','Integrasi').replace('Optimalisasi PAD','PAD');
+const labs=C.map(c=>short(c.n));
+function scoreTable(ids){return `<div class="sc"><table><tr><th>Komponen</th>${ids.map(i=>`<th>${P[i].n.replace('Kab. ','').replace('Kota ','K. ')}</th>`).join('')}</tr>${C.map(c=>`<tr><td>${c.n}</td>${ids.map(i=>`<td>${f1(c.s[i])}</td>`).join('')}</tr>`).join('')}<tr><td><b>Rata-rata</b></td>${ids.map(i=>`<td><b>${f1(avg(compScore(i)))}</b></td>`).join('')}</tr></table></div>`}
+const slides=[
+{t:'Ringkasan',r(){const ids=idx(st.s1);
+ return `<div class="bar">${sel('f','Tampilkan',[['','Semua (13)'],['Kota','Kota saja'],['Kabupaten','Kabupaten saja']],st.s1)}</div>
+ <div class="kpi"><div><b>${ids.length}</b><span>Pemda</span></div><div><b>${f1(avg(ids.map(i=>P[i].b)))}</b><span>Rata-rata skor ETPD 2023</span></div><div><b>${f1(avg(ids.map(i=>avg(compScore(i)))))}</b><span>Rata-rata skor 12 komponen</span></div><div><b>${P[ids.reduce((a,b)=>P[b].b>P[a].b?b:a)].n.replace('Kab. ','')}</b><span>Skor ETPD tertinggi</span></div></div>
+ <div class="grid"><div class="card"><h2>Skor baseline ETPD vs skor komponen</h2><p class="sub">Baseline ETPD Smt I 2023 dibanding rata-rata 12 komponen (estimasi 2026)</p><div class="cv"><canvas id="c1"></canvas></div></div><div class="card"><h2>Skor per komponen</h2><p class="sub">Skala 0–100</p>${scoreTable(ids)}</div></div>`},
+ a(){const ids=idx(st.s1);mk('c1',{type:'bar',data:{labels:ids.map(i=>P[i].n.replace('Kab. ','')),datasets:[{label:'Baseline ETPD 2023',data:ids.map(i=>P[i].b),backgroundColor:'#c4572b'},{label:'Rata-rata komponen 2026 (est.)',data:ids.map(i=>+avg(compScore(i)).toFixed(1)),backgroundColor:'#0f5c5a'}]},options:{indexAxis:'y'}})},
+ b(){document.getElementById('f').onchange=e=>{st.s1=e.target.value;show()}}},
+...[['Kota','s2'],['Kabupaten','s3']].map(([t,k])=>({t:'Spider '+t,r(){const ids=idx(t);
+ return `<div class="bar">${sel('f','Pilih '+t,[['all','Semua '+t+' ('+ids.length+')'],...ids.map(i=>[i,P[i].n])],st[k])}</div>
+ <div class="grid"><div class="card"><h2>Spider web 12 komponen – ${t}</h2><p class="sub">${st[k]=='all'?'Semua '+t+' ditampilkan bersamaan':P[st[k]].n}</p><div class="cv"><canvas id="c"></canvas></div></div><div class="card"><h2>Tabel skor</h2><p class="sub">Skor komponen 0–100</p>${scoreTable(st[k]=='all'?ids:[+st[k]])}</div></div>`},
+ a(){const ids=st[k]=='all'?idx(t):[+st[k]];mk('c',{type:'radar',data:{labels:labs,datasets:ids.map(i=>rds(P[i].n,compScore(i),i,ids.length<4))}})},
+ b(){document.getElementById('f').onchange=e=>{st[k]=e.target.value;show()}}})),
+{t:'Per Pemda',r(){const p=P[st.s4],c=C;
+ return `<div class="bar">${sel('f','Pilih Pemda',[...['Kota','Kabupaten'].flatMap(t=>idx(t).map(i=>[i,P[i].n]))],st.s4)}</div>
+ <div class="kpi"><div><b>${p.t}</b><span>Jenis</span></div><div><b>${p.b}</b><span>Skor ETPD 2023</span></div><div><b>${f1(avg(compScore(st.s4)))}</b><span>Rata-rata komponen</span></div></div>
+ <div class="grid"><div class="card"><h2>${p.n} – profil 12 komponen</h2><p class="sub">Garis oranye putus = rata-rata ${p.t}</p><div class="cv"><canvas id="c"></canvas></div></div><div class="card"><h2>Detail indikator</h2><p class="sub">Nilai mentah</p><div class="sc"><table><tr><th>Indikator</th><th>Nilai</th></tr>${C.map(c=>`<tr><td colspan=2 style="background:var(--bg);font-weight:600;text-align:left">${c.n} · ${f1(c.s[st.s4])}</td></tr>`+c.it.map(i=>{const v=i.v[st.s4];return `<tr><td>${i.i} ${i.l}</td><td class="${v=='Yes'?'y':v=='No'?'n':''}">${v}${i.y=='PCT'?'%':''}</td></tr>`}).join('')).join('')}</table></div></div></div>`},
+ a(){const g=idx(P[st.s4].t);mk('c',{type:'radar',data:{labels:labs,datasets:[rds(P[st.s4].n,compScore(st.s4),st.s4),{label:'Rata-rata '+P[st.s4].t,data:C.map(c=>avg(g.map(i=>c.s[i]))),borderColor:'#888',borderDash:[5,4],pointRadius:0,fill:false,borderWidth:1.5}]}})},
+ b(){document.getElementById('f').onchange=e=>{st.s4=+e.target.value;show()}}},
+{t:'Per Komponen',r(){const c=C[st.s5];const ids=idx(st.s5t);
+ return `<div class="bar">${sel('f','Pilih Komponen',C.map((c,i)=>[i,(i+1)+'. '+c.n]),st.s5)}${sel('g','Jenis Pemda',[['','Kota + Kabupaten'],['Kota','Kota'],['Kabupaten','Kabupaten']],st.s5t)}</div>
+ <div class="grid"><div class="card"><h2>${c.n}</h2><p class="sub">Spider web: tiap sumbu = satu Pemda (skor 0–100)</p><div class="cv"><canvas id="c"></canvas></div></div><div class="card"><h2>Indikator</h2><p class="sub">Nilai mentah per Pemda</p><div class="sc"><table><tr><th>Pemda</th>${c.it.map(i=>`<th title="${i.l}">${i.i}</th>`).join('')}<th>Skor</th></tr>${ids.map(k=>`<tr><td>${P[k].n}</td>${c.it.map(i=>{const v=i.v[k];return `<td class="${v=='Yes'?'y':v=='No'?'n':''}">${v}</td>`}).join('')}<td><b>${f1(c.s[k])}</b></td></tr>`).join('')}</table></div><p class="note">${c.it.map(i=>i.i+' = '+i.l).join('<br>')}</p></div></div>`},
+ a(){const c=C[st.s5],ids=idx(st.s5t);mk('c',{type:'radar',data:{labels:ids.map(i=>P[i].n.replace('Kab. ','').replace('Kota ','K. ')),datasets:[rds(c.n,ids.map(i=>c.s[i]),3)]}})},
+ b(){f.onchange=e=>{st.s5=+e.target.value;show()};g.onchange=e=>{st.s5t=e.target.value;show()}}},
+{t:'Kota vs Kabupaten',r(){return `<div class="grid"><div class="card"><h2>Rata-rata Kota vs Kabupaten</h2><p class="sub">3 Kota dan 10 Kabupaten, skor 0–100</p><div class="cv"><canvas id="c"></canvas></div></div><div class="card"><h2>Selisih per komponen</h2><p class="sub">Kota – Kabupaten (poin)</p><div class="cv s"><canvas id="d"></canvas></div></div></div><p class="note">Skor komponen = rata-rata indikator ternormalisasi 0–100: Yes/No → 100/0; persentase apa adanya (maks 100); jumlah → dibanding nilai tertinggi; waktu rekonsiliasi (jam) → dibalik (makin cepat makin tinggi). Seluruh angka adalah ESTIMASI kerja 2026, bukan data resmi Pemda; validasi dengan Pemda/Bank RKUD.</p>`},
+ a(){const k=idx('Kota'),b=idx('Kabupaten'),ak=C.map(c=>avg(k.map(i=>c.s[i]))),ab=C.map(c=>avg(b.map(i=>c.s[i])));
+ mk('c',{type:'radar',data:{labels:labs,datasets:[rds('Rata-rata Kota',ak,0),rds('Rata-rata Kabupaten',ab,4)]}});
+ mk('d',{type:'bar',data:{labels:labs,datasets:[{label:'Kota – Kab',data:ak.map((x,i)=>+(x-ab[i]).toFixed(1)),backgroundColor:'#c4572b'}]},options:{plugins:{legend:{display:false}}}})},b(){}}
+];
+function show(){ch.forEach(c=>c.destroy());ch=[];const s=slides[cur];
+ document.getElementById('m').innerHTML=s.r()+`<div class="foot"><button id="pv">← Sebelumnya</button><span>Slide ${cur+1} / ${slides.length} · estimasi kerja, bukan data resmi</span><button id="nx">Berikutnya →</button></div>`;
+ [...document.querySelectorAll('nav button')].forEach((b,i)=>b.classList.toggle('on',i==cur));
+ s.a();s.b();pv.onclick=()=>go(cur-1);nx.onclick=()=>go(cur+1)}
+function go(i){cur=(i+slides.length)%slides.length;show();scrollTo(0,0)}
+nav.innerHTML=slides.map((s,i)=>`<button>${i+1}. ${s.t}</button>`).join('');
+[...nav.children].forEach((b,i)=>b.onclick=()=>go(i));
+addEventListener('keydown',e=>{if(e.target.tagName=='SELECT')return;if(e.key=='ArrowRight')go(cur+1);if(e.key=='ArrowLeft')go(cur-1)});
+show();
+</script></body></html>
